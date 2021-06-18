@@ -1,80 +1,74 @@
 import java.util.Scanner;
-class Main{
-
-    private static Scanner clavier=new Scanner(System.in);
-
-    public static void main(String[] args){
+public class Main{
+    private static Scanner scanner=new Scanner(System.in);
+    public static void main(String[] args) {
         int choix;
-        Service s=new Service();
+        UseCase uc=new UseCase();
+        String choix;
+        choix=scanner.nextLine();
+        return Integer.parseInt(choix);
         do {
             choix=menu();
-            switch(choix){
-               case 1:
-                    System.out.println("Ajouter une classe : ");
-                    System.out.println("Entrez le libelle de la classe à ajouter : ");
-                    String libelle=clavier.nextLine();
-                    Classe cl=new Classe();
-                    cl.setLibelle(libelle);
-                    s.ajouterClasse(cl);
+            switch (choix) {
+                case 1:
+                System.out.println("Veuillez entrer le libellé : ");
+                String libelle=scanner.nextLine();
+                Service serve=new Service();
+                serve.setLibelle(libelle);
+                uc.ajouterService(serve);
+                    break;
 
-                break;
+                case 2:
+                uc.listerService();
+                    break;
 
-               case 2:
-                    s.listerClasse();
+                case 3:
+                    System.out.println("Veuillez entrer le nom complet de l'employé : ");
+                    String nomComplet=scanner.nextLine();
+                    System.out.println("Veuillez entrer la date à laquelle l'employé a été embauché : ");
+                    String dateEmbauche=scanner.nextLine();
+                    Employe e=new Employe(nomComplet,dateEmbauche);
+                    uc.ajouterEmploye(e);
 
-               break;
+                    System.out.println("Affecter l'employé à un service");
+                    System.out.println("Veuillez saisir l'ID du Service");
+                    System.out.println("Voici la liste des services\n ");
+                    uc.listerService();
 
-               case 3:
-                    System.out.println("Ajouter un étudiant : ");
-                    System.out.println("Entrez le nom de l'étudiant à ajouter : ");
-                    String nomComplet=clavier.nextLine();
-                    System.out.println("Entrez le tuteur de l'étudiant à ajouter : ");
-                    String tuteur=clavier.nextLine();
+                    int idService = scanner.nextInt();
+                    Service serve = uc.affecterService(idService);
+                    Employe e = new Employe(nomComplet, dateEmbauche, serve);
+                    serve.setTableEmploye(employe);
+                    break;
 
-                    Etudiant et = new Etudiant(nomComplet, tuteur);
-                    s.ajouterEtudiant(et);
-
-                break;
                 case 4:
-                    s.listerPersonne();
-
-               break;
-
+                    System.out.println("Employés d'un Service\n");
+                    System.out.println("Sélectionner l'id du service\n ");
+                    uc.listerService();
+                    int idService = scanner.nextInt();
+                    uc.afficherEmployeService(idService);
+                    break;
+                    
                 case 5:
-                    System.out.println("Ajouter un enseignant : ");
-                    System.out.println("Entrez le nom de l'enseignant à ajouter : ");
-                    nomComplet=clavier.nextLine();
-                    System.out.println("Entrez le grade de l'enseignant à ajouter : ");
-                    String grade=clavier.nextLine();
-
-                    Enseignant ens = new Enseignant(nomComplet, grade);
-                    s.ajouterEnseignant(ens);
-
-                break;
-                case 6:
-                    s.listerPersonne();
-
-               break;
-
-
+                    System.out.println("Merci!");
+                    break;
+                   
+                default:
+                    System.out.println("Veuillez choisir une fonctionnalité existante");
+                    break;
             }
+
         }
-        while(choix!=7);
+        while(choix!=5);
     }
 
-    public static int menu(){
-        System.out.println("Veuillez faire un choix : "
-                            +"\n1- Ajouter classe"
-                            +"\n2- Lister classe"
-                            +"\n3- Ajouter Enseignant"
-                            +"\n4- Lister Enseignant"
-                            +"\n5- Ajouter Etudiant"
-                            +"\n6- Lister Etudiant"
-                            +"\n7- Quitter!");
-    }
-
-    String choix;
-    choix=scanner.nextLine();
-    return Integer.parseInt(choix);
+        public static int menu(){
+            System.out.println("1) Ajouter un service"
+                                +"\n2) lister les services"
+                                +"\n3) Ajouter un employé puis l'affecter à un service"
+                                +"\n4) Afficher les employés d'un service"
+                                +"\n5- Quitter");
+            
+        }
         
 }
